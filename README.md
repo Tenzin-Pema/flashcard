@@ -7,7 +7,7 @@
 ### App Walk-though
 When flashcard is tapped, display answer
 
-<img src="https://i.imgur.com/6sbaFoW.gif" width="40" height="40" />
+<img src="https://i.imgur.com/6sbaFoW.gif" width="400" height="400" />
 
 ## Required
 - [x] Create New Project in Xcode
