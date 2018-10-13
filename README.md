@@ -1,14 +1,13 @@
 ## Flashcard
 
 ### Simple flashcard
-`TODO://` Flashcard test app
+ Flashcard test app
+ One flash card
 
 ### App Walk-though
-`TODO://`
+When flashcard is tapped, display answer
 
-<img src="https://i.imgur.com/6sbaFoW.gifv" width=200><br>
-
-`TODO://` In the User stories section below, add an `x` between the `-[ ]` like this `- [x]` for any user story you complete. (☝️ Remove this paragraph after after checking off user stories)
+<img src="https://i.imgur.com/6sbaFoW.gif" width="40" height="40" />
 
 ## Required
 - [x] Create New Project in Xcode
