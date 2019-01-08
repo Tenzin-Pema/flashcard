@@ -9,7 +9,8 @@ More functions added to flashcard app. Can edit multiple choices but choice 2 sh
 - Show error if user leaves question or answer empty
 - Edit existing flashcard
 - Multiple choice question in creation
-<img src="YOUR_GIF_URL_HERE" width=200><br>
+<br />
+<img src="https://i.imgur.com/OxQI8Ov.gif" width=200><br>
 
 ## Required
 - [x] User can open the creation screen
@@ -30,7 +31,7 @@ More functions added to flashcard app. Can edit multiple choices but choice 2 sh
 ### App Walk-though
 When flashcard is tapped, display answer
 
-<img src="https://i.imgur.com/6sbaFoW.gif" width="400" height="400" />
+<img src="https://i.imgur.com/6sbaFoW.gif" width="300" />
 
 ## Required
 - [x] Create New Project in Xcode
