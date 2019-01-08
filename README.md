@@ -10,7 +10,7 @@ More functions added to flashcard app. Can edit multiple choices but choice 2 sh
 - Edit existing flashcard
 - Multiple choice question in creation
 <br />
-<img src="https://i.imgur.com/OxQI8Ov.gif" width=200><br>
+<img src="https://i.imgur.com/OxQI8Ov.gifv" width=200><br>
 
 ## Required
 - [x] User can open the creation screen
