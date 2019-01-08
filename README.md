@@ -9,7 +9,6 @@ More functions added to flashcard app. Can edit multiple choices but choice 2 sh
 - Show error if user leaves question or answer empty
 - Edit existing flashcard
 - Multiple choice question in creation
-<br />
 <img src="https://github.com/Tenzin-Pema/flashcard/blob/master/lab%202%20.gif?raw=true" width= "300"/>
 
 ## Required
