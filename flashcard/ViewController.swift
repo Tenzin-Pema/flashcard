@@ -7,6 +7,11 @@
 //
 
 import UIKit
+// create flashcard object
+struct Flashcard{
+    var question: String
+    var answer: String
+}
 
 class ViewController: UIViewController {
 
@@ -18,8 +23,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var btnOptionTwo: UIButton!
     @IBOutlet weak var btnOptionThree: UIButton!
     @IBOutlet weak var edit: UIButton!
+    
+    @IBOutlet weak var nextBtn: UIButton!
+    @IBOutlet weak var prevBtn: UIButton!
+    
+    // array to store flashcards
+    var flashcards = [Flashcard]()
+    var currentIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+        // UI formatting
         card.layer.cornerRadius = 20.0
         
         frontLabel.layer.cornerRadius = 20.0
@@ -28,7 +41,6 @@ class ViewController: UIViewController {
         backLabel.clipsToBounds = true
         
         edit.layer.cornerRadius = 15.0
-        
         
         card.layer.shadowRadius = 15.0
         card.layer.shadowOpacity = 0.2
@@ -40,35 +52,129 @@ class ViewController: UIViewController {
         btnOptionThree.layer.borderWidth = 2.0
         btnOptionThree.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
-        
+        readSavedFlashCards()
+        if flashcards.count == 0{
+        updateFlashcard(question: "Which country won the 2016 Rugby World Cup?", answer: "New Zealand", choiceOne: "England", actualAns: "New Zealand", choiceThree: "South Africa")
+        }else{
+            updateLabel()
+            updateNextPrevButtons()
+        }
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         let navigationController = segue.destination as! UINavigationController
         let creationController = navigationController.topViewController as! CreationViewController
-        creationController.flashcardsController = self
         
+        creationController.flashcardsController = self
+        // if edit is triggered, current question&answer is available to edit in
+        // CreationViewController
         if segue.identifier == "editSegue"{
             creationController.initialQuestion = frontLabel.text
             creationController.initialAnswer = backLabel.text
         }
         
     }
-
+    
+    @IBAction func didTapOnNext(_ sender: UIButton) {
+        // increase currentIndex
+        currentIndex += 1
+        // update label
+        updateLabel()
+        // update next/prev button
+        updateNextPrevButtons()
+    }
+    
+    @IBAction func didTapOnPrevious(_ sender: UIButton) {
+        currentIndex -= 1
+        updateLabel()
+        updateNextPrevButtons()
+        
+    }
+    
+// function to flip card
     @IBAction func didTapOnFlashcard(_ sender: Any) {
+        
         if frontLabel.isHidden == true{
             frontLabel.isHidden = false
         } else {
             frontLabel.isHidden = true
         }
     }
+    // function to add new card
+    
     func updateFlashcard(question: String, answer: String, choiceOne: String, actualAns: String, choiceThree: String) {
-        frontLabel.text = question
-        backLabel.text = answer
+        // initialize card object
+        let flashcard = Flashcard(question: question, answer: answer)
+        
+        // Adding flashcard in array
+        flashcards.append(flashcard)
+        
+        // update current index
+        currentIndex = flashcards.count - 1
+        
+        // update buttons
+        updateNextPrevButtons()
+        
+        // update label
+        updateLabel()
         
         btnOptionOne.setTitle(choiceOne, for: .normal)
         btnOptionTwo.setTitle(actualAns, for: .normal)
         btnOptionThree.setTitle(choiceThree, for: .normal)
+        
+        // save flashcard to disk
+        saveAllFlashcardsToDisk()
     }
+    func updateNextPrevButtons() {
+        // disable next button if last flashcard is shown
+        if currentIndex == flashcards.count - 1 {
+            nextBtn.isEnabled = false
+            nextBtn.isHidden = true
+        } else{
+            nextBtn.isEnabled = true
+            nextBtn.isHidden = false
+        }
+        // disable previous button if first flashcard is shown
+        if currentIndex == 0{
+            prevBtn.isEnabled = false
+            prevBtn.isHidden = true
+        }else{
+            prevBtn.isEnabled = true
+            prevBtn.isHidden = false
+        }
+    }
+    
+    func updateLabel(){
+        // What is current flashcard?
+        let currentFlashcard = flashcards[currentIndex]
+        // update label
+        frontLabel.text = currentFlashcard.question
+        backLabel.text = currentFlashcard.answer
+    }
+    
+    func saveAllFlashcardsToDisk(){
+        // from flashcardArray to Dictionary array
+        let dictArray = flashcards.map { (card) -> [String: String] in
+            return ["question": card.question, "answer": card.answer ]
+        }
+        // save array
+        UserDefaults.standard.set(dictArray, forKey: "flashcards")
+        
+        // debug
+        print("Flashcards saved to UserDefaults")
+        
+    }
+    func readSavedFlashCards(){
+        // read from UserDefault
+        if let dictArray = UserDefaults.standard.array(forKey: "flashcards") as? [[String: String]]{
+            let savedCards = dictArray.map { (dictionary) -> Flashcard in
+                return Flashcard(question: dictionary["question"]!, answer: dictionary["answer"]!)
+            }
+            flashcards.append(contentsOf: savedCards)
+        }
+    }
+    
     @IBAction func didTapOptionOne(_ sender: UIButton) {
         btnOptionOne.isHidden = true
     }
