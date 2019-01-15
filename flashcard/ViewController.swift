@@ -101,6 +101,47 @@ class ViewController: UIViewController {
             frontLabel.isHidden = true
         }
     }
+    
+    @IBAction func didTapOnDelete(_ sender: UIButton) {
+        
+        let alert = UIAlertController(title: "Delete Flashcard?", message: "Are you sure you want to delete current card?", preferredStyle: .actionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            self.deleteCurrentFlashcard()
+        }
+        alert.addAction(deleteAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    func deleteCurrentFlashcard(){
+        //delete flashcard at current index
+        let alert = UIAlertController(title: "Delete flashcard", message: "There aren't any flashcards left", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default)
+        alert.addAction(okAction)
+        
+        if currentIndex != 0{
+            flashcards.remove(at: currentIndex)
+        }else{
+            present(alert, animated: true)
+            
+        }
+        
+        //refresh index value
+        if currentIndex > flashcards.count - 1{
+            currentIndex = flashcards.count - 1
+        }
+        updateLabel()
+        updateNextPrevButtons()
+        saveAllFlashcardsToDisk()
+        
+    }
+    
+    
+    
+    
+    
     // function to add new card
     
     func updateFlashcard(question: String, answer: String, choiceOne: String, actualAns: String, choiceThree: String) {
