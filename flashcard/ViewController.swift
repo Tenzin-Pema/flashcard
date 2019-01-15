@@ -11,6 +11,7 @@ import UIKit
 struct Flashcard{
     var question: String
     var answer: String
+    
 }
 
 class ViewController: UIViewController {
@@ -54,7 +55,7 @@ class ViewController: UIViewController {
         
         readSavedFlashCards()
         if flashcards.count == 0{
-        updateFlashcard(question: "Which country won the 2016 Rugby World Cup?", answer: "New Zealand", choiceOne: "England", actualAns: "New Zealand", choiceThree: "South Africa")
+        updateFlashcard(question: "Which country won the 2016 Rugby World Cup?", answer: "New Zealand", isExisting: true, choiceOne: "England", actualAns: "New Zealand", choiceThree: "South Africa")
         }else{
             updateLabel()
             updateNextPrevButtons()
@@ -121,7 +122,7 @@ class ViewController: UIViewController {
         let okAction = UIAlertAction(title: "Ok", style: .default)
         alert.addAction(okAction)
         
-        if currentIndex != 0{
+        if flashcards.count > 1{
             flashcards.remove(at: currentIndex)
         }else{
             present(alert, animated: true)
@@ -144,12 +145,20 @@ class ViewController: UIViewController {
     
     // function to add new card
     
-    func updateFlashcard(question: String, answer: String, choiceOne: String, actualAns: String, choiceThree: String) {
+    func updateFlashcard(question: String, answer: String, isExisting: Bool, choiceOne: String, actualAns: String, choiceThree: String) {
+        
         // initialize card object
         let flashcard = Flashcard(question: question, answer: answer)
         
-        // Adding flashcard in array
-        flashcards.append(flashcard)
+        if isExisting{
+            // Replace existing flashcard
+            flashcards[currentIndex] = flashcard
+            
+        }else{
+            // Adding flashcard in array
+            flashcards.append(flashcard)
+        }
+       
         
         // update current index
         currentIndex = flashcards.count - 1
@@ -204,6 +213,7 @@ class ViewController: UIViewController {
         
         // debug
         print("Flashcards saved to UserDefaults")
+        print(flashcards)
         
     }
     func readSavedFlashCards(){
