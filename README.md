@@ -13,8 +13,8 @@ TODO: improving choice ability
 - [x] Push code to GitHub
 ## Optional
 - [x] User can delete a flashcard
-- [ ] User can edit existing flashcard
-- [ ] User can store multiple choice questions
+- [x] User can edit existing flashcard
+- [ ] User can store multiple choice questions (having problems with this)
 ## Lab 2
 
 ### App Description
